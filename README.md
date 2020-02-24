@@ -154,7 +154,7 @@ spec:
 ## Available configurations parameters
 The parameters can be sent via environment variables or via HTTP headers, also you can combine them.
 
-The parameter `LDAP_SEARCH_FILTER` support variable expansion with the username, you can do something like this `(sAMAccountName={username})` and `{username}` is going to be replaced by the username typed in the login form.
+The parameters `LDAP_SEARCH_FILTER` and `LDAP_AUTH_FILTER` supports variable expansion with the username, you can do something like this `(sAMAccountName={username})` and `{username}` is going to be replaced by the username typed in the login form.
 
 ### Environment variables
 - `LDAP_ENDPOINT` LDAP URL with the port number. Ex: `ldaps://testmyldap.com:636`
@@ -164,6 +164,7 @@ The parameter `LDAP_SEARCH_FILTER` support variable expansion with the username,
 - `LDAP_SEARCH_FILTER` Filter to search, for Microsoft Active Directory usually you can use `sAMAccountName`. Ex: `(sAMAccountName={username})`
 - `LDAP_SERVER_DOMAIN` **(Optional)**, for Microsoft Active Directory usually need the domain name for authenticate the user. Ex: `TESTMYLDAP.COM`
 - `LDAP_REQUIRED_GROUPS` **(Optional)**, required groups are case insensitive (`DevOps` is the same as `DEVOPS`), you can send a list separated by commas, try first without required groups. Ex: `'DevOps', 'DevOps_QA'`
+- `LDAP_AUTH_FILTER` **(Optional)** Filter to apply to username before authentication.
 - `CACHE_EXPIRATION` **(Optional, default=5)** Expiration time in minutes for the cache. Ex: `10`
 
 ### HTTP headers
@@ -174,6 +175,7 @@ The parameter `LDAP_SEARCH_FILTER` support variable expansion with the username,
 - `Ldap-Search-Filter`
 - `Ldap-Server-Domain` **(Optional)**
 - `Ldap-Required-Groups` **(Optional)**
+- `Ldap-Auth-Filter` **(Optional)**
 
 ## Known limitations
 - Parameters via headers need to be escaped, for example, you can not send parameters such as `$1` or `$test` because Nginx is applying variable expansion.

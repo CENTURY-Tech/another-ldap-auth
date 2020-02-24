@@ -2,13 +2,14 @@ import ldap
 import time
 
 class Aldap:
-	def __init__(self, ldapEndpoint, dnUsername, dnPassword, serverDomain, searchBase, searchFilter):
+	def __init__(self, ldapEndpoint, dnUsername, dnPassword, serverDomain, searchBase, searchFilter, authFilter):
 		self.ldapEndpoint = ldapEndpoint
 		self.searchBase = searchBase
 		self.dnUsername = dnUsername
 		self.dnPassword = dnPassword
 		self.serverDomain = serverDomain
 		self.searchFilter = searchFilter
+		self.authFilter = authFilter
 		self.username = ''
 		self.password = ''
 
@@ -22,6 +23,8 @@ class Aldap:
 		self.password = password
 		# Replace in the filter the {username} for the username
 		self.searchFilter = self.searchFilter.replace("{username}", self.username)
+		if self.authFilter:
+			self.username = self.authFilter.replace("{username}", self.username)
 
 	def search(self):
 		print("[INFO][SEARCH] Searching by filter:", self.searchFilter)

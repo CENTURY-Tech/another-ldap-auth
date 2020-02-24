@@ -60,6 +60,12 @@ def login(username, password):
 			LDAP_SERVER_DOMAIN = request.headers["Ldap-Server-Domain"]
 		elif "LDAP_SERVER_DOMAIN" in environ:
 			LDAP_SERVER_DOMAIN = environ["LDAP_SERVER_DOMAIN"]
+
+		LDAP_AUTH_FILTER = ""
+		if "Ldap-Auth-Filter" in request.headers:
+			LDAP_AUTH_FILTER = request.headers["Ldap-Auth-Filter"]
+		elif "LDAP_AUTH_FILTER" in environ:
+			LDAP_AUTH_FILTER = environ["LDAP_AUTH_FILTER"]
 	except KeyError as e:
 		print("[ERROR] Invalid parameter: ", e)
 		return False
@@ -71,10 +77,11 @@ def login(username, password):
 		LDAP_MANAGER_PASSWORD,
 		LDAP_SERVER_DOMAIN,
 		LDAP_SEARCH_BASE,
-		LDAP_SEARCH_FILTER
+		LDAP_SEARCH_FILTER,
+		LDAP_AUTH_FILTER
 	)
 
-	# Set the username and passwor from the basic auth form
+	# Set the username and password from the basic auth form
 	aldap.setUser(username, password)
 
 	# Check for required groups only if are defined
